@@ -2,7 +2,7 @@ import streamlit as st
 from streamlit_ace import st_ace
 from pistonpy import PistonApp
 
-from app.problems import problems
+from problems import problems
 
 # Instantiate the piston client
 piston = PistonApp()
