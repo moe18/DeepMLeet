@@ -40,6 +40,11 @@ def main():
     st.header(selected_problem)
     st.write(problem_info["description"])
 
+    # Button for "Show Solution"
+    if st.button("Learn"):
+        # Display the solution code
+        st.write(problem_info["learn"])
+
     # Streamlit-ace editor for user code input
     
     user_code = st_ace(language="python", theme="twilight", key=f"code_editor_{selected_problem}", value=problem_info["starter_code"], height=350)
@@ -68,6 +73,8 @@ def main():
                 st.balloons()
             else:
                 st.error(f"Failed: {test} => Expected: {expected}, Got: {output}")
+    
+    
 
     # Button for "Show Solution"
     if st.button("Show Solution"):
