@@ -1,12 +1,53 @@
 problems = {
     "Add Two Numbers": {
         "description": "Write a Python function that accepts two parameters and returns their sum.",
+        "learn": '',
         "starter_code": "def add(a, b):\n    return a + b",
         "solution": "def add(a, b):\n    return a + b  # This is the simplest solution.",
         "test_cases": [
             {"test": "add(1, 2)", "expected_output": "3"},
             {"test": "add(-1, -1)", "expected_output": "-2"},
             {"test": "add(100, 200)", "expected_output": "300"},
+        ],
+    },"Matrix times Vector": {
+        "description": "Write a Python function that takes the dot product of a matrix and a vector. return -1 if the matrix could not be dotted with the vector",
+        "learn": r'''
+        ## Matrix Multiplication with a Vector Example
+
+        Consider a matrix \(A\) and a vector \(v\), where:
+
+        Matrix \(A\):
+        $$
+        A = \begin{pmatrix} a_{11} & a_{12} \\ a_{21} & a_{22} \end{pmatrix}
+        $$
+
+        Vector \(v\):
+        $$
+        v = \begin{pmatrix} v_1 \\ v_2 \end{pmatrix}
+        $$
+
+        The dot product of \(A\) and \(v\) results in a new vector:
+        $$
+        A \cdot v = \begin{pmatrix} a_{11}v_1 + a_{12}v_2 \\ a_{21}v_1 + a_{22}v_2 \end{pmatrix}
+        $$
+        things to note: a n x m matrix will need to be multiplied by a vector of size m or else this would not work.
+        ''',
+        "starter_code": "def matrix_dot_vector(a:list[list[int|float]],b:list[int|float])-> list[list[int|float]]:\n    return c",
+        "solution": """def matrix_dot_vector(a:list[list[int|float]],b:list[int|float])-> list[list[int|float]]:
+    if len(a[0]) != len(b):
+        return -1
+    vals = []
+    for i in a:
+        hold = 0
+        for j in range(len(i)):
+            hold+=(i[j] * b[j])
+        vals.append(hold)
+
+    return vals""",
+        "test_cases": [
+            {"test": "matrix_dot_vector([[1,2,3],[2,4,5],[6,8,9]],[1,2,3])", "expected_output": "[14, 25, 49]"},
+            {"test": "matrix_dot_vector([[1,2,3],[2,4,5],[6,8,9],[12,4,0]],[1,2,3])", "expected_output": "[14, 25, 49, 20]"},
+            {"test": "matrix_dot_vector([[1,2],[2,4],[6,8],[12,4]],[1,2,3])", "expected_output": "-1"},
         ],
     },
     "Linear Regression with NumPy": {
