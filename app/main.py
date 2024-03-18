@@ -31,59 +31,66 @@ def run_test_cases(user_code, test_cases):
 
 def main():
     st.title("Machine Learning Challenge Platform")
+
     # Let user select a problem
     problem_names = list(problems.keys())
     selected_problem = st.selectbox("Select a Problem:", problem_names)
     problem_info = problems[selected_problem]
 
-    # Display the selected problem
-    st.header(selected_problem)
-    st.write(problem_info["description"])
-    st.code(problem_info["example"])
-
-    # Button for "Show Solution"
-    if st.button("Learn More"):
-        # Display the solution code
-        st.write(problem_info["learn"])
-
-    # Streamlit-ace editor for user code input
+    try:
+        is_section = problem_info['section']
+        st.markdown(problem_info["description"])
     
-    user_code = st_ace(language="python", theme="twilight", key=f"code_editor_{selected_problem}", value=problem_info["starter_code"], height=350)
-    st.warning('Make sure to apply changes to your code before running it')
+    except KeyError:
 
-    # Button for "Run Code"
-    if st.button("Run Code"):
-        # Execute user code without testing against test cases
-        result = execute_code(user_code)
-        if result:
-            st.subheader("Execution Result:")
-            stdout = result['run']['output']
-            st.text_area("Output", stdout, height=150)
-        else:
-            st.error("Failed to execute the code.",'Error:',stdout)
+        # Display the selected problem
+        st.header(selected_problem)
+        st.write(problem_info["description"])
+        st.code(problem_info["example"])
 
-    # Button for "Submit Code"
-    if st.button("Submit Code"):
-        # Execute user code and run test cases
-        results = run_test_cases(user_code, problem_info["test_cases"])
-        all_passed = True
-        st.subheader("Test Results:")
-        for test, expected, output, passed in results:
-            if passed:
-                st.success(f"Passed: {test} => Expected: {expected}, Got: {output}")
+        # Button for "Show Solution"
+        if st.button("Learn More"):
+            # Display the solution code
+            st.write(problem_info["learn"])
+
+        # Streamlit-ace editor for user code input
+        
+        user_code = st_ace(language="python", theme="twilight", key=f"code_editor_{selected_problem}", value=problem_info["starter_code"], height=350)
+        st.warning('Make sure to apply changes to your code before running it')
+
+        # Button for "Run Code"
+        if st.button("Run Code"):
+            # Execute user code without testing against test cases
+            result = execute_code(user_code)
+            if result:
+                st.subheader("Execution Result:")
+                stdout = result['run']['output']
+                st.text_area("Output", stdout, height=150)
             else:
-                st.error(f"Failed: {test} => Expected: {expected}, Got: {output}")
-                all_passed = False 
-        if all_passed:
-            st.balloons()
-    
-    
+                st.error("Failed to execute the code.",'Error:',stdout)
 
-    # Button for "Show Solution"
-    if st.button("Show Solution"):
-        # Display the solution code
-        st.subheader("Solution:")
-        st.code(problem_info["solution"], language="python")
+        # Button for "Submit Code"
+        if st.button("Submit Code"):
+            # Execute user code and run test cases
+            results = run_test_cases(user_code, problem_info["test_cases"])
+            all_passed = True
+            st.subheader("Test Results:")
+            for test, expected, output, passed in results:
+                if passed:
+                    st.success(f"Passed: {test} => Expected: {expected}, Got: {output}")
+                else:
+                    st.error(f"Failed: {test} => Expected: {expected}, Got: {output}")
+                    all_passed = False 
+            if all_passed:
+                st.balloons()
+        
+        
+
+        # Button for "Show Solution"
+        if st.button("Show Solution"):
+            # Display the solution code
+            st.subheader("Solution:")
+            st.code(problem_info["solution"], language="python")
 
 if __name__ == "__main__":
     main()
