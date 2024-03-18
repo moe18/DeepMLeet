@@ -1,4 +1,71 @@
 problems = {
+
+    "1. Linear Algebra": {
+        "section": True,
+        "description": """## Linear Algebra in Machine Learning and Deep Learning
+
+Linear Algebra is the foundational math behind the algorithms and data analysis in Machine Learning (ML) and Deep Learning (DL). This section is designed to make Linear Algebra concepts accessible, organizing them into practical categories:
+
+### Foundational Skills
+
+- **Get Shape of Matrix**: Understand how data is structured, a critical step in data manipulation.
+- **Reshape**: Learn to alter data shapes to fit various ML algorithms' requirements.
+- **Matrix Multiplication**: Gain proficiency in this fundamental operation essential for algorithm computations.
+- **Mean**: Master the calculation of average values in datasets, a basic statistical tool.
+- **Var**: Explore how to calculate variance to understand the distribution of data.
+
+### Intermediate Understanding
+
+- **Covariance Matrix**: Step up your skills by analyzing the relationships between datasets, crucial for understanding data dynamics.
+
+### Advanced Techniques
+
+- **QR Decomposition**: Approach this technique for breaking down matrices, vital for solving complex linear algebra problems.
+- **Eigenvalues and Eigenvectors**: Unlock advanced ML capabilities by understanding these concepts, allowing for effective data dimensionality reduction and insights into data's intrinsic properties.
+
+Each section is crafted to build on the last, ensuring a comprehensive understanding from basic operations to advanced analytical methods. Through engaging exercises and clear explanations, you'll be equipped to apply Linear Algebra in practical ML and DL scenarios.
+""",
+        "example": '',
+        "learn": '',
+        "starter_code": "",
+        "solution": """""",
+        "test_cases": [],
+    },
+
+    "Get Matrix Shape (easy)": {
+        "description": "Write a Python function that gets the shape of a matrix",
+        "example": """ Example:
+        input: a = [[1,2],[2,4],[4,5]]
+        output:(3,2)
+        reasoning: There are three rows and two columns """,
+        "learn": r'''
+        ## Matrix Shape Determination
+
+Consider a general matrix \(M\) consisting of rows and columns:
+
+Matrix \(M\):
+$$
+M = \begin{pmatrix}
+m_{11} & m_{12} & \cdots & m_{1n} \\
+m_{21} & m_{22} & \cdots & m_{2n} \\
+\vdots & \vdots & \ddots & \vdots \\
+m_{m1} & m_{m2} & \cdots & m_{mn}
+\end{pmatrix}
+$$
+
+The shape of matrix \(M\) is defined by the number of rows and columns it contains, represented as a tuple \((m, n)\), where \(m\) is the number of rows, and \(n\) is the number of columns in the matrix.
+
+**Things to note**: Understanding the shape of a matrix is crucial for matrix operations, including addition, multiplication, and transposition, as these operations often require specific dimensional compatibilities. For example, when multiplying two matrices \(A\) and \(B\) where \(A\) is of shape \((m, n)\) and \(B\) is of shape \((p, q)\), the operation is valid only if \(n = p\), resulting in a new matrix of shape \((m, q)\).
+        ''',
+        "starter_code": "def get_shape(a:list[list[int|float]])-> set:\n    return (n,m)",
+        "solution": """def get_shape(a:list[list[int|float]])-> set:
+    return (len(a), len(a[0]))""",
+        "test_cases": [
+            {"test": "get_shape([[1,2,3],[2,4,5],[6,8,9]])", "expected_output": "(3, 3)"},
+            {"test": "get_shape([[1,2,3],[2,4,5]])", "expected_output": "(2, 3)"},
+            {"test": "get_shape([[1,2],[2,4],[6,8],[12,4]])", "expected_output": "(4, 2)"},
+        ],
+    },
     
     "Matrix times Vector (easy)": {
         "description": "Write a Python function that takes the dot product of a matrix and a vector. return -1 if the matrix could not be dotted with the vector",
@@ -56,7 +123,7 @@ Example:
                     [3,4]]
         output:[[ 8,  9],
                 [16, 18]]
-        reasoning: 1*1 + 2*3 = 8;
+        reasoning: 1*2 + 2*3 = 8;
                    2*2 + 3*4 = 16;
                    1*1 + 2*4 = 9;
                    2*1 + 4*4 = 18
