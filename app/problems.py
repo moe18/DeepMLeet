@@ -1,18 +1,14 @@
 problems = {
-    "Add Two Numbers": {
-        "description": "Write a Python function that accepts two parameters and returns their sum.",
-        "learn": '',
-        "starter_code": "def add(a, b):\n    return a + b",
-        "solution": "def add(a, b):\n    return a + b  # This is the simplest solution.",
-        "test_cases": [
-            {"test": "add(1, 2)", "expected_output": "3"},
-            {"test": "add(-1, -1)", "expected_output": "-2"},
-            {"test": "add(100, 200)", "expected_output": "300"},
-        ],
-    },"Matrix times Vector": {
+    
+    "Matrix times Vector (easy)": {
         "description": "Write a Python function that takes the dot product of a matrix and a vector. return -1 if the matrix could not be dotted with the vector",
+        "example": """ Example:
+        input: a = [[1,2],[2,4]], b = [1,2]
+        output:[5, 10] 
+        reasoning: 1*1 + 2*2 = 5;
+                   1*2+ 2*4 = 10 """,
         "learn": r'''
-        ## Matrix Multiplication with a Vector Example
+        ## Matrix Times Vector
 
         Consider a matrix \(A\) and a vector \(v\), where:
 
@@ -32,8 +28,8 @@ problems = {
         $$
         things to note: a n x m matrix will need to be multiplied by a vector of size m or else this would not work.
         ''',
-        "starter_code": "def matrix_dot_vector(a:list[list[int|float]],b:list[int|float])-> list[list[int|float]]:\n    return c",
-        "solution": """def matrix_dot_vector(a:list[list[int|float]],b:list[int|float])-> list[list[int|float]]:
+        "starter_code": "def matrix_dot_vector(a:list[list[int|float]],b:list[int|float])-> list[int|float]:\n    return c",
+        "solution": """def matrix_dot_vector(a:list[list[int|float]],b:list[int|float])-> list[int|float]:
     if len(a[0]) != len(b):
         return -1
     vals = []
@@ -50,43 +46,76 @@ problems = {
             {"test": "matrix_dot_vector([[1,2],[2,4],[6,8],[12,4]],[1,2,3])", "expected_output": "-1"},
         ],
     },
-    "Linear Regression with NumPy": {
-        "description": "Implement linear regression using only NumPy to fit a model to the given data points. The function should accept two parameters: X (features) and y (target) and return the coefficients of the linear model.",
-        "starter_code": """import numpy as np
+    "Matrix times Matrix (medium)": {
+        "description": "multiply two matrices together (return -1 if shapes of matrix dont aline), i.e. C = A dot product B",
+        "example": """ 
+Example:
+        input: A = [[1,2],
+                    [2,4]], 
+               B = [[2,1],
+                    [3,4]]
+        output:[[ 8,  9],
+                [16, 18]]
+        reasoning: 1*1 + 2*3 = 8;
+                   2*2 + 3*4 = 16;
+                   1*1 + 2*4 = 9;
+                   2*1 + 4*4 = 18
+                    
+Example 2:
+        input: A = [[1,2],
+                    [2,4]], 
+               B = [[2,1],
+                    [3,4],
+                    [4,5]]
+        output: -1
+        reasoning: the length of the rows of A does not equal
+          the column length of B""",
+        "learn": r'''
+## Matrix Multiplication
 
-def linear_regression(X, y):
-    # Add a bias term with ones
-    X_b = np.c_[np.ones((len(X), 1)), X]
-    # Calculate coefficients using the Normal Equation
-    theta_best = np.linalg.inv(X_b.T.dot(X_b)).dot(X_b.T).dot(y)
-    return theta_best
-""",
-        "solution": """import numpy as np
+Consider two matrices \(A\) and \(B\), to demonstrate their multiplication, defined as follows:
 
-def linear_regression(X, y):
-    X_b = np.c_[np.ones((len(X), 1)), X]  # add x0 = 1 to each instance
-    theta_best = np.linalg.inv(X_b.T.dot(X_b)).dot(X_b.T).dot(y)
-    return theta_best  # Returns the vector of coefficients [b, m1, m2, ..., mn]
+- Matrix \(A\):
+$$
+A = \begin{pmatrix} a_{11} & a_{12} \\ a_{21} & a_{22} \end{pmatrix}
+$$
 
-# Example usage (not part of the solution code):
-# X = 2 * np.random.rand(100, 1)
-# y = 4 + 3 * X + np.random.randn(100, 1)
-# theta_best = linear_regression(X, y)
-""",
+- Matrix \(B\):
+$$
+B = \begin{pmatrix} b_{11} & b_{12} \\ b_{21} & b_{22} \end{pmatrix}
+$$
+
+The multiplication of matrix \(A\) by matrix \(B\) is calculated as:
+$$
+A \times B = \begin{pmatrix} a_{11}b_{11} + a_{12}b_{21} & a_{11}b_{12} + a_{12}b_{22} \\ a_{21}b_{11} + a_{22}b_{21} & a_{21}b_{12} + a_{22}b_{22} \end{pmatrix}
+$$
+
+This operation results in a new matrix where each element is the result of the dot product between the rows of matrix \(A\) and the columns of matrix \(B\).
+''',
+        "starter_code": """def matrixmul(a:list[list[int|float]],\n              b:list[list[int|float]])-> list[list[int|float]]: \n return c""",
+        "solution": """
+
+def matrixmul(a:list[list[int|float]],
+              b:list[list[int|float]])-> list[list[int|float]]:
+    if len(a[0]) != len(b):
+        return -1
+    
+    vals = []
+    for i in range(len(a)):
+        hold = []
+        for j in range(len(b[0])):
+            val = 0
+            for k in range(len(b)):
+                val += a[i][k] * b[k][j]
+                           
+            hold.append(val)
+        vals.append(hold)
+
+    return vals""",
         "test_cases": [
-            {
-                "test": "linear_regression(np.array([[1], [2], [3]]), np.array([3, 5, 7]))",
-                "expected_output": "[1. 2.]",
-            },
-            {
-                "test": "linear_regression(np.array([[1, 2], [2, 3], [3, 4]]), np.array([6, 8, 10]))",
-                "expected_output": "[2. 1. 1.]",
-            },
-            {
-                "test": "linear_regression(np.array([[1], [2], [4]]), np.array([2, 3, 6]))",
-                "expected_output": "[0.66666667 1.33333333]",
-            },
+            {"test": "matrixmul([[1,2,3],[2,3,4],[5,6,7]],[[3,2,1],[4,3,2],[5,4,3]])", "expected_output": "[[26, 20, 14], [38, 29, 20], [74, 56, 38]]"},
+            {"test": "matrixmul([[0,0],[2,4],[1,2]],[[0,0],[2,4]])", "expected_output": "[[0, 0], [8, 16], [4, 8]]"},
+            {"test": "matrixmul([[0,0],[2,4],[1,2]],[[0,0,1],[2,4,1],[1,2,3]])", "expected_output": "-1"},
         ],
-    },
-    # Include other problems and their solutions in the same manner
+    }
 }
