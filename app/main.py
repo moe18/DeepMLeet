@@ -20,13 +20,13 @@ def run_test_cases(user_code, test_cases):
         code_to_run = f"{user_code}\n\nprint({test_case['test']})"
         result = execute_code(code_to_run)
         
-        stdout = result['run']['stdout'].strip()
+        stdout = result['run']['output'].strip()
         expected_output = test_case['expected_output'].strip()
-        
+
         # Check if the test case passed
         passed = stdout == expected_output
         results.append((test_case['test'], expected_output, stdout, passed))
-        
+
     return results
 
 def main():
@@ -39,9 +39,10 @@ def main():
     # Display the selected problem
     st.header(selected_problem)
     st.write(problem_info["description"])
+    st.code(problem_info["example"])
 
     # Button for "Show Solution"
-    if st.button("Learn"):
+    if st.button("Learn More"):
         # Display the solution code
         st.write(problem_info["learn"])
 
@@ -56,23 +57,25 @@ def main():
         result = execute_code(user_code)
         if result:
             st.subheader("Execution Result:")
-            stdout = result['run']['stdout']
+            stdout = result['run']['output']
             st.text_area("Output", stdout, height=150)
         else:
-            st.error("Failed to execute the code.")
+            st.error("Failed to execute the code.",'Error:',stdout)
 
     # Button for "Submit Code"
     if st.button("Submit Code"):
         # Execute user code and run test cases
         results = run_test_cases(user_code, problem_info["test_cases"])
-        
+        all_passed = True
         st.subheader("Test Results:")
         for test, expected, output, passed in results:
             if passed:
                 st.success(f"Passed: {test} => Expected: {expected}, Got: {output}")
-                st.balloons()
             else:
                 st.error(f"Failed: {test} => Expected: {expected}, Got: {output}")
+                all_passed = False 
+        if all_passed:
+            st.balloons()
     
     
 
@@ -84,3 +87,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
