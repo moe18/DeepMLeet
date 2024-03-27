@@ -503,105 +503,7 @@ def svd_2x2_singular_values(A: np.ndarray) -> tuple:
        [-0.81741556,  0.57604844]]))"""
         }
     ]
-},"Implement QR Decomposition (hard)": {
-    "description": "Write a Python function that performs QR Decomposition on a given square matrix using the Gram-Schmidt process. The function should return the orthogonal matrix Q and the upper triangular matrix R.",
-    "example": """Example:
-        input: matrix = [[1, 2], [3, 4]]
-        output: {
-            "Q": "Orthogonal matrix",
-            "R": "Upper triangular matrix"
-        }
-        reasoning: QR Decomposition factorizes the matrix into an orthogonal matrix Q and an upper triangular matrix R.""",
-    "learn": r'''
-        ## QR Decomposition
-
-        QR Decomposition is a pivotal factorization of a matrix into two components: an orthogonal matrix \(Q\) and an upper triangular matrix \(R\). This decomposition is vital for various applications, including solving linear systems, eigenvalue computation, and least squares fitting.
-
-        ### Overview
-        Given a matrix \(A\), QR Decomposition finds two matrices \(Q\) and \(R\) such that:
-        $$
-        A = QR
-        $$
-        where \(Q\) is an orthogonal matrix (meaning \(Q^TQ = QQ^T = I\), with \(I\) being the identity matrix) and \(R\) is an upper triangular matrix.
-
-        ### Gram-Schmidt Process
-        The Gram-Schmidt process is a methodical approach to achieve QR Decomposition. It transforms the columns of \(A\) into an orthogonal set of vectors (forming \(Q\)), and then constructs \(R\) using these orthogonal vectors.
-
-        The steps are as follows:
-        1. Normalize the first column of \(A\) to get the first column of \(Q\).
-        2. For each subsequent column \(a_k\) in \(A\):
-           - Subtract the projection of \(a_k\) onto all previously calculated columns in \(Q\) to get a vector orthogonal to all those columns.
-           - Normalize this vector to get the \(k^{th}\) column of \(Q\).
-        
-        The projections are calculated using the formula:
-        $$
-        \text{proj}_{q}(a) = \frac{\langle a, q \rangle}{\langle q, q \rangle}q
-        $$
-        for a vector \(a\) onto a vector \(q\).
-
-        After determining \(Q\), the elements of \(R\) are found by:
-        $$
-        R_{ij} = 
-        \begin{cases} 
-        \langle q_i, a_j \rangle & \text{if } i \leq j \\
-        0 & \text{if } i > j
-        \end{cases}
-        $$
-        This structured approach allows \(A\) to be decomposed efficiently, facilitating a deeper understanding and computation of linear algebraic operations.
-        '''
-,
-    "starter_code": "def qr_decomposition(matrix: list[list[float]]) -> dict:\n    return {'Q': Q, 'R': R}",
-    "solution": """def qr_decomposition(matrix: list[list[float]]) -> dict:
-    # Placeholder for a detailed implementation of QR Decomposition using the Gram-Schmidt process
-    # The implementation should compute the orthogonal matrix Q and the upper triangular matrix R based on the input matrix.
-    return {'Q': 'Orthogonal matrix placeholder', 'R': 'Upper triangular matrix placeholder'}""",
-    "test_cases": [
-        {
-            "test": "qr_decomposition([[1, 2], [3, 4]])",
-            "expected_output": "{'Q': 'Orthogonal matrix', 'R': 'Upper triangular matrix'}"
-        }
-    ]
-},
-"Implement Principal Component Analysis (PCA) (hard)":{
-    "description": "Write a Python function that performs Principal Component Analysis (PCA) on a given 2D dataset using NumPy. The function should standardize the dataset, compute the covariance matrix, find the eigenvalues and eigenvectors, and project the dataset onto the principal component with the highest eigenvalue. Return the projected dataset.",
-    "example": """Example:
-        input: dataset = [[1, 2], [3, 4], [5, 6]]
-        output: [Transformed dataset as a list of projected values]
-        reasoning: By standardizing the dataset, computing the covariance matrix, extracting eigenvalues and eigenvectors, and projecting onto the principal component, the dataset is transformed to capture the most variance.""",
-    "learn": r'''
-        ## Principal Component Analysis (PCA)
-
-        Principal Component Analysis (PCA) is a technique used to emphasize variation and bring out strong patterns in a dataset. It's often used to make data easy to explore and visualize. PCA can also be used for dimensionality reduction in machine learning models.
-
-        ### Steps for PCA:
-        1. **Standardization**: Convert the data to have a mean of zero and a standard deviation of one.
-        2. **Covariance Matrix Calculation**: Compute the covariance matrix to assess how features vary together.
-        3. **Eigenvalue and Eigenvector Computation**: Determine the eigenvalues and eigenvectors of the covariance matrix to identify the principal components.
-        4. **Projection**: Project the original data onto the space defined by the eigenvectors corresponding to the largest eigenvalues to obtain the transformed dataset.
-
-        This process reduces the dimensionality of the data while preserving as much of the data's variation as possible.
-        ''',
-    "starter_code": "def perform_pca(dataset: list[list[float]]) -> list[float]:\n    # Your code here\n    pass",
-    "solution": """import numpy as np
-
-def perform_pca(dataset):
-    data = np.array(dataset)
-    mean = np.mean(data, axis=0)
-    std_dev = np.std(data, axis=0)
-    standardized_data = (data - mean) / std_dev
-    covariance_matrix = np.cov(standardized_data.T)
-    eigenvalues, eigenvectors = np.linalg.eig(covariance_matrix)
-    eigenvalues_sorted_indices = np.argsort(eigenvalues)[::-1]
-    principal_component = eigenvectors[:, eigenvalues_sorted_indices[0]]
-    transformed_dataset = np.dot(standardized_data, principal_component)
-    return transformed_dataset.tolist()""",
-    "test_cases": [
-        {
-            "test": "perform_pca([[1, 2], [3, 4], [5, 6]])",
-            "expected_output": "The output will be the dataset transformed by PCA, which should be a list of values representing the dataset projected onto the principal component."
-        }
-    ]
-},
+}, 
 "Determinant of a 4x4 Matrix using Laplace's Expansion (hard)": {
     "description": "Write a Python function that calculates the determinant of a 4x4 matrix using Laplace's Expansion method. The function should take a single argument, a 4x4 matrix represented as a list of lists, and return the determinant of the matrix. The elements of the matrix can be integers or floating-point numbers. Implement the function recursively to handle the computation of determinants for the 3x3 minor matrices.",
     "example": """Example:
@@ -649,10 +551,4 @@ def perform_pca(dataset):
         {"test": 'determinant_4x4([[4, 3, 2, 1], [3, 2, 1, 4], [2, 1, 4, 3], [1, 4, 3, 2]])', "expected_output": '-160'},
         {"test": 'determinant_4x4([[0, 1, 2, 3], [1, 2, 3, 4], [2, 3, 4, 5], [3, 4, 5, 6]])', "expected_output": '0'},
     ]
-}
-
-
-
-
-
-}
+}}
