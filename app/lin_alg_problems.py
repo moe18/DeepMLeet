@@ -4,27 +4,27 @@ problems = {
         "section": True,
         "description": """## Linear Algebra in Machine Learning and Deep Learning
 
-Linear Algebra is the foundational math behind the algorithms and data analysis in Machine Learning (ML) and Deep Learning (DL). This section is designed to make Linear Algebra concepts accessible, organizing them into practical categories:
+Linear Algebra is crucial for understanding and working with data in Machine Learning (ML) and Deep Learning (DL). This section introduces Linear Algebra concepts that are fundamental for ML and DL, providing a structured approach to mastering this essential mathematical foundation:
 
 ### Foundational Skills
 
-- **Get Shape of Matrix**: Understand how data is structured, a critical step in data manipulation.
-- **Reshape**: Learn to alter data shapes to fit various ML algorithms' requirements.
-- **Matrix Multiplication**: Gain proficiency in this fundamental operation essential for algorithm computations.
-- **Mean**: Master the calculation of average values in datasets, a basic statistical tool.
-- **Var**: Explore how to calculate variance to understand the distribution of data.
+- **Get Matrix Shape**: Knowing the dimensions of data matrices is essential for preprocessing and model architecture design.
+- **Matrix Multiplication**: Crucial for forward and backward passes in neural networks, filters in convolutional networks, and more.
+- **Scalar and Element-wise Operations**: Understand how to manipulate matrices and vectors for feature scaling and normalization.
+- **Determinants and Inverses**: Learn about matrix properties that are vital for understanding linear transformations and solving systems of linear equations.
+- **Eigenvalues and Eigenvectors**: Discover how these concepts are used in dimensionality reduction techniques such as PCA, and in understanding the stability of systems.
 
 ### Intermediate Understanding
 
-- **Covariance Matrix**: Step up your skills by analyzing the relationships between datasets, crucial for understanding data dynamics.
+- **Singular Value Decomposition (SVD)**: A key factorization method for solving linear systems, data compression, and noise reduction.
+- **Covariance Matrices**: Essential for understanding the variance within datasets and for feature selection.
 
 ### Advanced Techniques
 
-- **QR Decomposition**: Approach this technique for breaking down matrices, vital for solving complex linear algebra problems.
-- **Eigenvalues and Eigenvectors**: Unlock advanced ML capabilities by understanding these concepts, allowing for effective data dimensionality reduction and insights into data's intrinsic properties.
+- **Linear Transformations**: Dive into the geometric interpretations of matrix operations and their applications in ML and DL.
+- **Orthogonality and Orthonormality**: Concepts critical for understanding the stability of numerical methods and for reducing overfitting through regularization.
 
-Each section is crafted to build on the last, ensuring a comprehensive understanding from basic operations to advanced analytical methods. Through engaging exercises and clear explanations, you'll be equipped to apply Linear Algebra in practical ML and DL scenarios.
-""",
+Each topic is designed to build upon the previous, ensuring a deep and comprehensive understanding of how Linear Algebra powers machine learning algorithms and data analysis. Practical exercises and examples will demonstrate the application of these mathematical concepts in real-world ML and DL scenarios.""",
         "example": '',
         "learn": '',
         "starter_code": "",
