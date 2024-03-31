@@ -53,3 +53,13 @@ streamlit run app/main.py
 ```
 This command assumes that main.py is located within an app directory. Adjust the path accordingly if your file structure is different.
 
+
+## How to Contribute
+
+We are excited to have you contribute to the DeepMLeet project! Whether you're looking to improve the UI, add new problems, or enhance existing ones, your contributions are welcome.
+
+For detailed instructions on how to contribute, including guidelines and best practices, please see our [contribute.md](contribute.md) page. This guide provides all the information you need to get started, including how to fork the repository, make changes, and submit your contributions for review.
+
+Your insights, improvements, and additions are what make this project thrive. We look forward to seeing your contributions!
+
+
