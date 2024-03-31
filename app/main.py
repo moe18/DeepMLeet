@@ -14,7 +14,7 @@ pages = {
     "Deep Learning": DeepLearning
 }
 
-# Sidebar for navigation
+# Sidebar for navigation for navigating 
 st.sidebar.title('Navigation')
 selection = st.sidebar.radio("Sections", list(pages.keys()))
 
