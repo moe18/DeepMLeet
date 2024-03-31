@@ -14,3 +14,42 @@ DeepMLeet leverages the convenience and power of Streamlit, coupled with the cod
 - **Instant Test Case Evaluation:** Run your solutions against predefined test cases to ensure accuracy and performance, with immediate pass/fail feedback.
 - **Solution Insights:** Access the solution for learning purposes after attempting the problems, fostering understanding and improvement.
 
+## Running the DeepMLeet Streamlit App
+
+Follow this guide to set up your environment and run the Streamlit app from the DeepMLeet repository.
+
+### Prerequisites
+
+Ensure you have [Anaconda](https://www.anaconda.com/products/individual) or [Miniconda](https://docs.conda.io/en/latest/miniconda.html) installed on your system.
+
+### Setup
+
+#### 1. Clone the Repository
+
+Clone the DeepMLeet repository to your local machine using the terminal or command prompt:
+
+```bash
+git clone https://github.com/moe18/DeepMLeet.git
+cd DeepMLeet
+```
+#### 2.Create a Conda Environment
+Create a new Conda environment using Python 3.12.2. Replace deepmleetenv with your preferred environment name if desired:
+```bash
+conda create --name deepmleetenv python=3.12.2
+conda activate deepmleetenv
+```
+
+#### 3. Install Dependencies
+With the Conda environment activated, install the required dependencies, including Streamlit. This assumes there is a requirements.txt file present in the repository:
+
+``` bash
+pip install -r requirements.txt
+```
+
+### Running the App
+With the environment set and dependencies installed, run the Streamlit app by executing:
+```bash
+streamlit run app/main.py
+```
+This command assumes that main.py is located within an app directory. Adjust the path accordingly if your file structure is different.
+
