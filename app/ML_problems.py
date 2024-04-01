@@ -32,6 +32,66 @@ Each topic is crafted to build upon the previous, ensuring a deep and comprehens
         "test_cases": []
     }
 ,
+    "Entropy Calculation (easy)": {
+        "description": "Write a Python function that calculates the entropy of a dataset. The function should take a list of class labels as input and return the entropy of the dataset. Round your answer to four decimal places.",
+        "example": """Example:
+            input: labels = [1, 1, 1, 0, 0, 0]
+            output: 1.0
+            reasoning: There are two classes (1 and 0), each occurring 3 times out of 6, leading to a probability of 0.5 for each class. The entropy is -2 * (0.5 * log2(0.5)) = 1.0.""",
+        "learn": r'''
+            ## Entropy in Information Theory and Machine Learning
+
+Entropy is a measure of the unpredictability or randomness of a dataset. In the context of machine learning, particularly in decision tree algorithms, entropy can be used to quantify the impurity or disorder within a set of items. It helps in determining the best features that contribute to dividing the dataset into the best possible homogeneous sets.
+
+The formula for entropy of a dataset is:
+
+$$
+H(X) = -\sum_{i=1}^{n} p(x_i) \cdot \log_2(p(x_i))
+$$
+
+Where:
+- $$H(X)$$ is the entropy of the set $$X$$,
+- $$p(x_i)$$ is the probability of occurrence of class $$x_i$$ in the set,
+- The sum is calculated over all unique classes in the dataset.
+
+Entropy is 0 when the dataset is completely uniform (all elements belong to a single class), and it reaches its maximum value when the dataset is evenly split between classes.
+
+### Practical Implementation
+
+Calculating the entropy of a dataset involves determining the frequency of each class in the dataset, calculating the probability of each class, and then applying the entropy formula.
+        ''',
+
+        "starter_code": """import numpy as np
+def calculate_entropy(labels: list) -> float:
+    # Your code here, make sure to round
+    return entropy""",
+        "solution": """
+import numpy as np
+def calculate_entropy(labels: list) -> float:
+    _, counts = np.unique(labels, return_counts=True)
+    probabilities = counts / counts.sum()
+    entropy = -np.sum(probabilities * np.log2(probabilities))
+    return np.round(entropy, 4)""",
+        "test_cases": [
+            {
+                "test": "calculate_entropy([1, 1, 1, 0, 0, 0])",
+                "expected_output": "1.0"
+            },
+            {
+                "test": "calculate_entropy([1, 1, 1, 1, 0, 0, 0, 0])",
+                "expected_output": "1.0"
+            },
+            {
+                "test": "calculate_entropy([1, 1, 0, 0, 0, 0])",
+                "expected_output": "0.9183"
+            },
+            {
+                "test": "calculate_entropy([1, 1, 1, 1, 1, 0])",
+                "expected_output": "0.65"
+            }
+        ],
+    },
+
     "Linear Regression Using Normal Equation (easy)": {
     "description": "Write a Python function that performs linear regression using the normal equation. The function should take a matrix X (features) and a vector y (target) as input, and return the coefficients of the linear regression model. Round your answer to four decimal places, -0.0 is a valid result for rounding a very small number.",
     "example": """Example:
