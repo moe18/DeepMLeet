@@ -1,3 +1,4 @@
+import ast
 import streamlit as st
 from streamlit_ace import st_ace
 from pistonpy import PistonApp
@@ -24,7 +25,10 @@ def run_test_cases(user_code, test_cases):
         expected_output = test_case['expected_output'].strip()
 
         # Check if the test case passed
-        passed = stdout == expected_output
+        if '{' in stdout:
+            passed = ast.literal_eval(stdout) == ast.literal_eval(expected_output)
+        else:
+            passed = stdout == expected_output
         results.append((test_case['test'], expected_output, stdout, passed))
 
     return results

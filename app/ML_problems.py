@@ -206,5 +206,89 @@ def linear_regression_gradient_descent(X: np.ndarray, y: np.ndarray, alpha: floa
             }
         ],
     },
+    
+  "Decision Tree Learning (medium)": {
+    "description": "Write a Python function that implements the decision tree learning algorithm for classification. The function should use recursive binary splitting based on entropy and information gain to build a decision tree. It should take a list of examples (each example is a dict of attribute-value pairs) and a list of attribute names as input, and return a nested dictionary representing the decision tree.",
+    "example":"""
+Example:
+    input: examples = [
+                {'Outlook': 'Sunny', 'Temperature': 'Hot', 'Humidity': 'High', 'Wind': 'Weak', 'PlayTennis': 'No'},
+                {'Outlook': 'Sunny', 'Temperature': 'Hot', 'Humidity': 'High', 'Wind': 'Strong', 'PlayTennis': 'No'},
+                {'Outlook': 'Overcast', 'Temperature': 'Hot', 'Humidity': 'High', 'Wind': 'Weak', 'PlayTennis': 'Yes'},
+                {'Outlook': 'Rain', 'Temperature': 'Mild', 'Humidity': 'High', 'Wind': 'Weak', 'PlayTennis': 'Yes'}
+            ],
+            attributes = ['Outlook', 'Temperature', 'Humidity', 'Wind']
+    output: {
+        'Outlook': {
+            'Sunny': {'Humidity': {'High': 'No', 'Normal': 'Yes'}},
+            'Overcast': 'Yes',
+            'Rain': {'Wind': {'Weak': 'Yes', 'Strong': 'No'}}
+        }
+    }
+    reasoning: Using the given examples, the decision tree algorithm determines that 'Outlook' is the best attribute to split the data initially. When 'Outlook' is 'Overcast', the outcome is always 'Yes', so it becomes a leaf node. In cases of 'Sunny' and 'Rain', it further splits based on 'Humidity' and 'Wind', respectively. The resulting tree structure is able to classify the training examples with the attributes 'Outlook', 'Temperature', 'Humidity', and 'Wind'.
+""",
+        "learn": "## Decision Tree Learning Algorithm\n\nThe decision tree learning algorithm is a method used for classification that predicts the value of a target variable based on several input variables. Each internal node of the tree corresponds to an input variable, and each leaf node corresponds to a class label.\n\nThe recursive binary splitting starts by selecting the attribute that best separates the examples according to the entropy and information gain, which are calculated as follows:\n\nEntropy: $$H(X) = -\\sum p(x) \\log_2 p(x)$$ \n\n Information Gain: $$IG(D, A) = H(D) - \\sum \\frac{|D_v|}{|D|} H(D_v)$$\n\nWhere:\n- $$H(X)$$ is the entropy of the set,\n- $$IG(D, A)$$ is the information gain of dataset $$D$$ after splitting on attribute $$A$$,\n- $$D_v$$ is the subset of $$D$$ for which attribute $$A$$ has value $$v$$.\n\nThe attribute with the highest information gain is used at each step, and the dataset is split based on this attribute's values. This process continues recursively until all data is perfectly classified or no remaining attributes can be used to make a split.",
+    "starter_code": "def learn_decision_tree(examples: list[dict], attributes: list[str], target_attr: str) -> dict:\n    # Your code here\n    return decision_tree",
+    "solution": """
+import math
+from collections import Counter
 
-}
+def calculate_entropy(labels):
+    label_counts = Counter(labels)
+    total_count = len(labels)
+    entropy = -sum((count / total_count) * math.log2(count / total_count) for count in label_counts.values())
+    return entropy
+
+def calculate_information_gain(examples, attr, target_attr):
+    total_entropy = calculate_entropy([example[target_attr] for example in examples])
+    values = set(example[attr] for example in examples)
+    attr_entropy = 0
+    for value in values:
+        value_subset = [example[target_attr] for example in examples if example[attr] == value]
+        value_entropy = calculate_entropy(value_subset)
+        attr_entropy += (len(value_subset) / len(examples)) * value_entropy
+    return total_entropy - attr_entropy
+
+def majority_class(examples, target_attr):
+    return Counter([example[target_attr] for example in examples]).most_common(1)[0][0]
+
+def learn_decision_tree(examples, attributes, target_attr):
+    if not examples:
+        return 'No examples'
+    if all(example[target_attr] == examples[0][target_attr] for example in examples):
+        return examples[0][target_attr]
+    if not attributes:
+        return majority_class(examples, target_attr)
+    
+    gains = {attr: calculate_information_gain(examples, attr, target_attr) for attr in attributes}
+    best_attr = max(gains, key=gains.get)
+    tree = {best_attr: {}}
+    
+    for value in set(example[best_attr] for example in examples):
+        subset = [example for example in examples if example[best_attr] == value]
+        new_attributes = attributes.copy()
+        new_attributes.remove(best_attr)
+        subtree = learn_decision_tree(subset, new_attributes, target_attr)
+        tree[best_attr][value] = subtree
+    
+    return tree
+""",
+    "test_cases": [
+    {
+        "test": "learn_decision_tree([\n"
+                "    {'Outlook': 'Sunny', 'Wind': 'Weak', 'PlayTennis': 'No'},\n"
+                "    {'Outlook': 'Overcast', 'Wind': 'Strong', 'PlayTennis': 'Yes'},\n"
+                "    {'Outlook': 'Rain', 'Wind': 'Weak', 'PlayTennis': 'Yes'},\n"
+                "    {'Outlook': 'Sunny', 'Wind': 'Strong', 'PlayTennis': 'No'},\n"
+                "    {'Outlook': 'Sunny', 'Wind': 'Weak', 'PlayTennis': 'Yes'},\n"
+                "    {'Outlook': 'Overcast', 'Wind': 'Weak', 'PlayTennis': 'Yes'},\n"
+                "    {'Outlook': 'Rain', 'Wind': 'Strong', 'PlayTennis': 'No'},\n"
+                "    {'Outlook': 'Rain', 'Wind': 'Weak', 'PlayTennis': 'Yes'}\n"
+                "], ['Outlook', 'Wind'], 'PlayTennis')",
+        "expected_output":  "{'Outlook': {'Sunny': {'Wind': {'Weak': 'No', 'Strong': 'No'}}, 'Rain': {'Wind': {'Weak': 'Yes', 'Strong': 'No'}}, 'Overcast': 'Yes'}}"
+    }
+]
+
+
+  }}
+
