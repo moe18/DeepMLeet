@@ -38,6 +38,7 @@ Each topic is designed to build upon the previous, ensuring a deep and comprehen
         input: a = [[1,2],[2,4],[4,5]]
         output:(3,2)
         reasoning: There are three rows and two columns """,
+        "video":"https://youtu.be/eQWOcMiT7ks?si=xu5pD44Tq2wZOxgO",
         "learn": r'''
         ## Matrix Shape Determination
 

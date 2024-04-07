@@ -52,6 +52,13 @@ def app():
         if st.button("Learn More"):
             # Display the solution code
             st.write(problem_info["learn"])
+        
+        if st.button("Video"):
+            try:
+                VIDEO_URL = problem_info['video']
+                st.video(VIDEO_URL)
+            except:
+                st.write("Video coming soon")
 
         # Streamlit-ace editor for user code input
         
