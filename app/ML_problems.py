@@ -206,8 +206,76 @@ def linear_regression_gradient_descent(X: np.ndarray, y: np.ndarray, alpha: floa
             }
         ],
     },
+    "K-Means Clustering(medium)": {
+        "description": "Write a Python function that implements the k-Means algorithm for clustering, starting with specified initial centroids and a set number of iterations. The function should take a list of points (each represented as a tuple of coordinates), an integer k representing the number of clusters to form, a list of initial centroids (each a tuple of coordinates), and an integer representing the maximum number of iterations to perform. The function will iteratively assign each point to the nearest centroid and update the centroids based on the assignments until the centroids do not change significantly, or the maximum number of iterations is reached. The function should return a list of the final centroids of the clusters. Round to the nearest fourth decimal.",
+        "example": """Example:
+            input: points = [(1, 2), (1, 4), (1, 0), (10, 2), (10, 4), (10, 0)], k = 2, initial_centroids = [(1, 1), (10, 1)], max_iterations = 10
+            output: [(1, 2), (10, 2)]
+            reasoning: Given the initial centroids and a maximum of 10 iterations,
+            the points are clustered around these points, and the centroids are
+            updated to the mean of the assigned points, resulting in the final
+            centroids which approximate the means of the two clusters.
+            The exact number of iterations needed may vary,
+            but the process will stop after 10 iterations at most.""",
+        "learn": r'''
+            ## Implementing k-Means Clustering
+
+k-Means clustering is a method to partition `n` points into `k` clusters. Here is a brief overview of how to implement the k-Means algorithm:
+
+1. **Initialization**: Start by selecting `k` initial centroids. These can be randomly selected from the dataset or based on prior knowledge.
+
+2. **Assignment Step**: For each point in the dataset, find the nearest centroid. The "nearest" can be defined using Euclidean distance. Assign the point to the cluster represented by this nearest centroid.
+
+3. **Update Step**: Once all points are assigned to clusters, update the centroids by calculating the mean of all points in each cluster. This becomes the new centroid of the cluster.
+
+4. **Iteration**: Repeat the assignment and update steps until the centroids no longer change significantly, or until a predetermined number of iterations have been completed. This iterative process helps in refining the clusters to minimize within-cluster variance.
+
+5. **Result**: The final centroids represent the center of the clusters, and the points are partitioned accordingly.
+
+This algorithm assumes that the `mean` is a meaningful measure, which might not be the case for non-numeric data. The choice of initial centroids can significantly affect the final clusters, hence multiple runs with different starting points can lead to a more comprehensive understanding of the cluster structure in the data.
+        ''',
+
+        "starter_code": """def k_means_clustering(points: list[tuple[float, float]], k: int, initial_centroids: list[tuple[float, float]], max_iterations: int) -> list[tuple[float, float]]:
+    # Your code here
+    return final_centroids""",
+        "solution": """
+import numpy as np
+
+def euclidean_distance(a, b):
+    return np.sqrt(((a - b) ** 2).sum(axis=1))
+
+def k_means_clustering(points, k, initial_centroids, max_iterations):
+    points = np.array(points)
+    centroids = np.array(initial_centroids)
     
-  "Decision Tree Learning (medium)": {
+    for iteration in range(max_iterations):
+        # Assign points to the nearest centroid
+        distances = np.array([euclidean_distance(points, centroid) for centroid in centroids])
+        assignments = np.argmin(distances, axis=0)
+
+        new_centroids = np.array([points[assignments == i].mean(axis=0) if len(points[assignments == i]) > 0 else centroids[i] for i in range(k)])
+        
+        # Check for convergence
+        if np.all(centroids == new_centroids):
+            break
+        centroids = new_centroids
+        centroids = np.round(centroids,4)
+    return [tuple(centroid) for centroid in centroids]""",
+        "test_cases": [
+            {
+                "test": "k_means_clustering([(1, 2), (1, 4), (1, 0), (10, 2), (10, 4), (10, 0)], 2, [(1, 1), (10, 1)], 10)",
+                "expected_output": "[(1.0, 2.0), (10.0, 2.0)]"
+            },
+            {
+                "test": "k_means_clustering([(0, 0, 0), (2, 2, 2), (1, 1, 1), (9, 10, 9), (10, 11, 10), (12, 11, 12)], 2, [(1, 1, 1), (10, 10, 10)], 10)",
+                "expected_output": "[(1.0, 1.0, 1.0), (10.3333, 10.6667, 10.3333)]"
+            }
+        ],
+    }
+
+    ,
+    
+  "Decision Tree Learning (hard)": {
     "description": "Write a Python function that implements the decision tree learning algorithm for classification. The function should use recursive binary splitting based on entropy and information gain to build a decision tree. It should take a list of examples (each example is a dict of attribute-value pairs) and a list of attribute names as input, and return a nested dictionary representing the decision tree.",
     "example":"""
 Example:
