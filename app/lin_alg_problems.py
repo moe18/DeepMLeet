@@ -75,6 +75,7 @@ The shape of matrix \(M\) is defined by the number of rows and columns it contai
         output:[5, 10] 
         reasoning: 1*1 + 2*2 = 5;
                    1*2+ 2*4 = 10 """,
+        "video":"https://youtu.be/DNoLs5tTGAw?si=vpkPobZMA8YY10WY",
         "learn": r'''
         ## Matrix Times Vector
 
