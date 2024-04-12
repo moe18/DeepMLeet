@@ -272,6 +272,65 @@ def k_means_clustering(points, k, initial_centroids, max_iterations):
             }
         ],
     },
+    "Cross-Validation Data Split Implementation (medium)": {
+        "description": "Write a Python function that performs k-fold cross-validation data splitting from scratch. The function should take a dataset (as a 2D NumPy array where each row represents a data sample and each column represents a feature) and an integer k representing the number of folds. The function should split the dataset into k parts, systematically use one part as the test set and the remaining as the training set, and return a list where each element is a tuple containing the training set and test set for each fold.",
+        "example": """Example:
+            input: data = np.array([[1, 2], [3, 4], [5, 6], [7, 8], [9, 10]]), k = 5
+            output: [[[[3, 4], [5, 6], [7, 8], [9, 10]], [[1, 2]]],
+                    [[[1, 2], [5, 6], [7, 8], [9, 10]], [[3, 4]]],
+                    [[[1, 2], [3, 4], [7, 8], [9, 10]], [[5, 6]]], 
+                    [[[1, 2], [3, 4], [5, 6], [9, 10]], [[7, 8]]], 
+                    [[[1, 2], [3, 4], [5, 6], [7, 8]], [[9, 10]]]]
+            reasoning: The dataset is divided into 5 parts, each being used once as a test set while the remaining parts serve as the training set.""",
+        "learn": r'''
+            ## Understanding k-Fold Cross-Validation Data Splitting
+
+k-Fold cross-validation is a technique used to evaluate the generalizability of a model by dividing the data into `k` folds or subsets. Each fold acts as a test set once, with the remaining `k-1` folds serving as the training set. This approach ensures that every data point gets used for both training and testing, improving model validation.
+
+### Steps in k-Fold Cross-Validation Data Split:
+
+1. **Shuffle the dataset randomly**. (but not in this case becuase we test for a unique result)
+2. **Split the dataset into k groups**.
+3. **Generate Data Splits**: For each group, treat that group as the test set and the remaining groups as the training set.
+
+### Benefits of this Approach:
+
+- Ensures all data is used for both training and testing.
+- Reduces bias since each data point gets to be in a test set exactly once.
+- Provides a more robust estimate of model performance.
+
+Implementing this data split function will allow a deeper understanding of how data partitioning affects machine learning models and will provide a foundation for more complex validation techniques.
+        ''',
+
+        "starter_code": """def cross_validation_split(data: np.ndarray, k: int) -> list:
+    # Your code here
+    return folds""",
+        "solution": """
+import numpy as np
+
+def cross_validation_split(data, k):
+    np.random.shuffle(data)  # This line can be removed if shuffling is not desired in examples
+    fold_size = len(data) // k
+    folds = []
+    
+    for i in range(k):
+        start, end = i * fold_size, (i + 1) * fold_size if i != k-1 else len(data)
+        test = data[start:end]
+        train = np.concatenate([data[:start], data[end:]])
+        folds.append([train.tolist(), test.tolist()])
+    
+    return folds""",
+        "test_cases": [
+            {
+                "test": "cross_validation_split(np.array([[1, 2], [3, 4], [5, 6], [7, 8], [9, 10]]), 2)",
+                "expected_output": 
+                    """[[[[5, 6], [7, 8], [9, 10]], [[1, 2], [3, 4]]], [[[1, 2], [3, 4]], [[5, 6], [7, 8], [9, 10]]]]"""
+            }
+        ],
+    }
+
+,
+
 
     "Principal Component Analysis (PCA) Implementation (medium)": {
         "description": "Write a Python function that performs Principal Component Analysis (PCA) from scratch. The function should take a 2D NumPy array as input, where each row represents a data sample and each column represents a feature. The function should standardize the dataset, compute the covariance matrix, find the eigenvalues and eigenvectors, and return the principal components (the eigenvectors corresponding to the largest eigenvalues). The function should also take an integer k as input, representing the number of principal components to return.",
