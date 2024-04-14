@@ -120,6 +120,7 @@ The shape of matrix \(M\) is defined by the number of rows and columns it contai
         input: a = [[1,2,3],[4,5,6]]
         output: [[1,4],[2,5],[3,6]]
         reasoning: The transpose of a matrix is obtained by flipping rows and columns.""",
+    "video": "https://youtu.be/fj0ZJ2gTSmI?si=vG8VSqASjyG0eNLY",
     "learn": r'''
         ## Transpose of a Matrix
 
