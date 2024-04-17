@@ -156,6 +156,7 @@ The shape of matrix \(M\) is defined by the number of rows and columns it contai
         input: matrix = [[1, 2, 3], [4, 5, 6], [7, 8, 9]], mode = 'row'
         output: [2.0, 5.0, 8.0]
         reasoning: Calculating the mean of each row results in [(1+2+3)/3, (4+5+6)/3, (7+8+9)/3].""",
+        "video":'https://youtu.be/OTm0yijNYKc',
     "learn": r'''
         ## Calculate Mean by Row or Column
 
