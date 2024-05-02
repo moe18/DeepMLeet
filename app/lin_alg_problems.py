@@ -205,6 +205,7 @@ The shape of matrix \(M\) is defined by the number of rows and columns it contai
         input: matrix = [[1, 2], [3, 4]], scalar = 2
         output: [[2, 4], [6, 8]]
         reasoning: Each element of the matrix is multiplied by the scalar.""",
+    "video": "https://youtu.be/iE2NvpvZRBk",
     "learn": r'''
         ## Scalar Multiplication of a Matrix
 
