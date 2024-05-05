@@ -240,6 +240,7 @@ The shape of matrix \(M\) is defined by the number of rows and columns it contai
         output: [3.0, 1.0]
         reasoning: The eigenvalues of the matrix are calculated using the characteristic equation of the matrix,
           which for a 2x2 matrix is λ^2 - trace(A)λ + det(A) = 0, where λ are the eigenvalues.""",
+    "video": 'https://youtu.be/AMCFzIaHc4Y',
     "learn": r'''## Calculate Eigenvalues
 
 Eigenvalues of a matrix offer significant insight into the matrix's behavior, particularly in the context of linear transformations and systems of linear equations.
