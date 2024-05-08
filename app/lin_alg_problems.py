@@ -317,6 +317,7 @@ Example 2:
         output: -1
         reasoning: the length of the rows of A does not equal
           the column length of B""",
+        "video":'https://youtu.be/N2j0fA2E9k4',
         "learn": r'''
 ## Matrix Multiplication
 
