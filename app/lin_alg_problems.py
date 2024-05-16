@@ -434,6 +434,7 @@ In the covariance matrix:
         array([[-0.70710678, -0.70710678],
                [-0.70710678,  0.70710678]]))
         reasoning: U is the first matrix sigma is the second vector and V is the third matrix""",
+    "video":"https://youtu.be/-BHegXJZAww",
     "learn": r'''
        ## Singular Value Decomposition (SVD) via the Jacobi Method
 
