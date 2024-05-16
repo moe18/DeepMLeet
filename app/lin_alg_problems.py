@@ -372,6 +372,7 @@ def matrixmul(a:list[list[int|float]],
         input: vectors = [[1, 2, 3], [4, 5, 6]]
         output: [[1.0, 1.0], [1.0, 1.0]]
         reasoning: The dataset has two features with three observations each. The covariance between each pair of features (including covariance with itself) is calculated and returned as a 2x2 matrix.""",
+    "video":"https://youtu.be/-BHegXJZAww",
     "learn": r'''
         ## Calculate Covariance Matrix
 
@@ -434,7 +435,6 @@ In the covariance matrix:
         array([[-0.70710678, -0.70710678],
                [-0.70710678,  0.70710678]]))
         reasoning: U is the first matrix sigma is the second vector and V is the third matrix""",
-    "video":"https://youtu.be/-BHegXJZAww",
     "learn": r'''
        ## Singular Value Decomposition (SVD) via the Jacobi Method
 
