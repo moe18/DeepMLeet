@@ -11,7 +11,7 @@ pages = {
     "About": about,
     "Linear Algebra": LinAlg,
     "Machine Learning": MachineLearning,
-    "Deep Learning": DeepLearning
+    "Deep Learning [In Progress]": DeepLearning
 }
 
 # Sidebar for navigation for navigating 
