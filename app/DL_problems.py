@@ -79,7 +79,62 @@ def sigmoid(z: float) -> float:
             "expected_output": "0.2689"
         }
     ],
+},
+"Softmax Activation Function Implementation (easy)": {
+    "description": "Write a Python function that computes the softmax activation for a given list of scores. The function should return the softmax values as a list, each rounded to four decimal places.",
+    "example": """Example:
+        input: scores = [1, 2, 3]
+        output: [0.0900, 0.2447, 0.6652]
+        reasoning: The softmax function converts a list of values into a probability distribution. The probabilities are proportional to the exponential of each element divided by the sum of the exponentials of all elements in the list.""",
+    "learn": r'''
+        ## Understanding the Softmax Activation Function
+
+The softmax function is a generalization of the sigmoid function and is used in the output layer of a neural network model that handles multi-class classification tasks.
+
+### Mathematical Definition:
+
+The softmax function is mathematically represented as:
+
+$$
+\text{softmax}(z_i) = \frac{e^{z_i}}{\sum_{j} e^{z_j}}
+$$
+
+Where:
+- \(z_i\) is the score for class \(i\),
+- The denominator is the sum of the exponentials of all the scores.
+
+### Characteristics:
+
+- **Output Range**: Each output value is between 0 and 1, and the sum of all outputs is 1.
+- **Purpose**: It transforms scores into probabilities, which are easier to interpret and are useful for classification.
+
+This function is essential for models where the output needs to represent a probability distribution across multiple classes.
+    ''',
+
+    "starter_code": """import math\n\ndef softmax(scores: list[float]) -> list[float]:\n    # Your code here\n    return probabilities""",
+    "solution": """
+import math
+def softmax(scores: list[float]) -> list[float]:
+    exp_scores = [math.exp(score) for score in scores]
+    sum_exp_scores = sum(exp_scores)
+    probabilities = [round(score / sum_exp_scores, 4) for score in exp_scores]
+    return probabilities""",
+    "test_cases": [
+        {
+            "test": "softmax([1, 2, 3])",
+            "expected_output": "[0.09, 0.2447, 0.6652]"
+        },
+        {
+            "test": "softmax([1, 1, 1])",
+            "expected_output": "[0.3333, 0.3333, 0.3333]"
+        },
+        {
+            "test": "softmax([-1, 0, 5])",
+            "expected_output": "[0.0025, 0.0067, 0.9909]"
+        }
+    ],
 }
+
 
 
 }
