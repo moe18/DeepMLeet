@@ -28,9 +28,62 @@ Each topic is designed to build on the previous, ensuring a thorough understandi
         "starter_code": "",
         "solution": "",
         "test_cases": []
-    }
+    },
+    "Sigmoid Activation Function Understanding (easy)": {
+    "description": "Write a Python function that computes the output of the sigmoid activation function given an input value z. The function should return the output rounded to four decimal places.",
+    "example": """Example:
+        input: z = 0
+        output: 0.5
+        reasoning: The sigmoid function is defined as σ(z) = 1 / (1 + exp(-z)). For z = 0, exp(-0) = 1, hence the output is 1 / (1 + 1) = 0.5.""",
+    "learn": r'''
+        ## Understanding the Sigmoid Activation Function
+
+The sigmoid activation function is crucial in neural networks, especially for binary classification tasks. It maps any real-valued number into the (0, 1) interval, making it useful for modeling probability as an output.
+
+### Mathematical Definition:
+
+The sigmoid function is mathematically defined as:
+
+$$
+\sigma(z) = \frac{1}{1 + e^{-z}}
+$$
+
+Where \(z\) is the input to the function.
+
+### Characteristics:
+
+- **Output Range**: The output is always between 0 and 1.
+- **Shape**: It has an "S" shaped curve.
+- **Gradient**: The function's gradient is highest near z = 0 and decreases toward either end of the z-axis.
+
+This function is particularly useful for turning logits (raw prediction values) into probabilities in binary classification models.
+    ''',
+
+    "starter_code": """import math\n\ndef sigmoid(z: float) -> float:\n    # Your code here\n    return result""",
+    "solution": """
+import math
+def sigmoid(z: float) -> float:
+    result = 1 / (1 + math.exp(-z))
+    return round(result, 4)""",
+    "test_cases": [
+        {
+            "test": "sigmoid(0)",
+            "expected_output": "0.5"
+        },
+        {
+            "test": "sigmoid(1)",
+            "expected_output": "0.7311"
+        },
+        {
+            "test": "sigmoid(-1)",
+            "expected_output": "0.2689"
+        }
+    ],
+}
+
 
 }
+
 
 
 
