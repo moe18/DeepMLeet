@@ -133,7 +133,67 @@ def softmax(scores: list[float]) -> list[float]:
             "expected_output": "[0.0025, 0.0067, 0.9909]"
         }
     ],
+},
+"Single Neuron Activation (medium)": {
+    "description": "Write a Python function that simulates a single neuron with a sigmoid activation function for binary classification, handling multidimensional input features. The function should take a list of feature vectors (each vector representing multiple features for an example), associated true binary labels, and the neuron's weights (one for each feature) and bias as input. It should return the predicted probabilities after sigmoid activation and the mean squared error between the predicted probabilities and the true labels, both rounded to four decimal places.",
+    "example": """Example:
+        input: features = [[0.5, 1.0], [-1.5, -2.0], [2.0, 1.5]], labels = [0, 1, 0], weights = [0.7, -0.4], bias = -0.1
+        output: probabilities = [0.4013, 0.6682, 0.7981], mse = 0.1762
+        reasoning: For each input vector, the weighted sum is calculated by multiplying each feature by its corresponding weight, adding these up along with the bias, then applying the sigmoid function to produce a probability. The MSE is calculated as the average squared difference between each predicted probability and the corresponding true label.""",
+    "learn": r'''
+        ## Single Neuron Model with Multidimensional Input and Sigmoid Activation
+
+This task involves a neuron model designed for binary classification with multidimensional input features, using the sigmoid activation function to output probabilities. It also involves calculating the mean squared error (MSE) to evaluate prediction accuracy.
+
+### Mathematical Background:
+
+1. **Neuron Output Calculation**:
+   $$ z = \sum (weight_i \times feature_i) + bias $$
+
+   $$ \sigma(z) = \frac{1}{1 + e^{-z}} $$
+
+2. **MSE Calculation**:
+   $$ MSE = \frac{1}{n} \sum (predicted - true)^2 $$
+
+Where:
+- $$z$$ is the sum of weighted inputs plus bias,
+- $$\sigma(z)$$ is the sigmoid activation output,
+- $$predicted$$ are the probabilities after sigmoid activation,
+- $$true$$ are the true binary labels.
+
+### Practical Implementation:
+
+- Each feature vector is processed to calculate a combined weighted sum, which is then passed through the sigmoid function to determine the probability of the input belonging to the positive class.
+- MSE provides a measure of error, offering insights into the model's performance and aiding in its optimization.
+    ''',
+
+    "starter_code": """import math\n\ndef single_neuron_model(features: list[list[float]], labels: list[int], weights: list[float], bias: float) -> (list[float], float):\n    # Your code here\n    return probabilities, mse""",
+    "solution": """
+import math
+def single_neuron_model(features, labels, weights, bias):
+    probabilities = []
+    for feature_vector in features:
+        z = sum(weight * feature for weight, feature in zip(weights, feature_vector)) + bias
+        prob = 1 / (1 + math.exp(-z))
+        probabilities.append(round(prob, 4))
+    
+    mse = sum((prob - label) ** 2 for prob, label in zip(probabilities, labels)) / len(labels)
+    mse = round(mse, 4)
+    
+    return probabilities, mse""",
+    "test_cases": [
+        {
+            "test": "single_neuron_model([[0.5, 1.0], [-1.5, -2.0], [2.0, 1.5]], [0, 1, 0], [0.7, -0.4], -0.1)",
+            "expected_output": "([0.4626, 0.4134, 0.6682], 0.3349)"
+        },
+        {
+            "test": "single_neuron_model([[1, 2], [2, 3], [3, 1]], [1, 0, 1], [0.5, -0.2], 0)",
+            "expected_output": " ([0.525, 0.5987, 0.7858], 0.21)"
+        }
+    ],
 }
+
+
 
 
 
