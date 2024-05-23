@@ -18,7 +18,7 @@ def run_test_cases(user_code, test_cases):
     results = []
     for test_case in test_cases:
         # Modify user_code to include the test case at the end
-        code_to_run = f"{user_code}\n\nprint({test_case['test']})"
+        code_to_run = f"{user_code}\n\n{test_case['test']}"
         result = execute_code(code_to_run)
         
         stdout = result['run']['output'].strip()
