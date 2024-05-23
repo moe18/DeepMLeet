@@ -67,15 +67,15 @@ def sigmoid(z: float) -> float:
     return round(result, 4)""",
     "test_cases": [
         {
-            "test": "sigmoid(0)",
+            "test": "print(sigmoid(0))",
             "expected_output": "0.5"
         },
         {
-            "test": "sigmoid(1)",
+            "test": "print(sigmoid(1))",
             "expected_output": "0.7311"
         },
         {
-            "test": "sigmoid(-1)",
+            "test": "print(sigmoid(-1))",
             "expected_output": "0.2689"
         }
     ],
@@ -121,15 +121,15 @@ def softmax(scores: list[float]) -> list[float]:
     return probabilities""",
     "test_cases": [
         {
-            "test": "softmax([1, 2, 3])",
+            "test": "print(softmax([1, 2, 3]))",
             "expected_output": "[0.09, 0.2447, 0.6652]"
         },
         {
-            "test": "softmax([1, 1, 1])",
+            "test": "print(softmax([1, 1, 1]))",
             "expected_output": "[0.3333, 0.3333, 0.3333]"
         },
         {
-            "test": "softmax([-1, 0, 5])",
+            "test": "print(softmax([-1, 0, 5]))",
             "expected_output": "[0.0025, 0.0067, 0.9909]"
         }
     ],
@@ -183,11 +183,11 @@ def single_neuron_model(features, labels, weights, bias):
     return probabilities, mse""",
     "test_cases": [
         {
-            "test": "single_neuron_model([[0.5, 1.0], [-1.5, -2.0], [2.0, 1.5]], [0, 1, 0], [0.7, -0.4], -0.1)",
+            "test": "print(single_neuron_model([[0.5, 1.0], [-1.5, -2.0], [2.0, 1.5]], [0, 1, 0], [0.7, -0.4], -0.1))",
             "expected_output": "([0.4626, 0.4134, 0.6682], 0.3349)"
         },
         {
-            "test": "single_neuron_model([[1, 2], [2, 3], [3, 1]], [1, 0, 1], [0.5, -0.2], 0)",
+            "test": "print(single_neuron_model([[1, 2], [2, 3], [3, 1]], [1, 0, 1], [0.5, -0.2], 0))",
             "expected_output": " ([0.525, 0.5987, 0.7858], 0.21)"
         }
     ],
@@ -275,18 +275,142 @@ def train_neuron(features, labels, initial_weights, initial_bias, learning_rate,
     return updated_weights.tolist(), updated_bias, mse_values""",
     "test_cases": [
         {
-            "test": "train_neuron(np.array([[1.0, 2.0], [2.0, 1.0], [-1.0, -2.0]]), np.array([1, 0, 0]), np.array([0.1, -0.2]), 0.0, 0.1, 2)",
+            "test": "print(train_neuron(np.array([[1.0, 2.0], [2.0, 1.0], [-1.0, -2.0]]), np.array([1, 0, 0]), np.array([0.1, -0.2]), 0.0, 0.1, 2))",
             "expected_output": "([0.1019, -0.1711], -0.0083, [0.3033, 0.2987])"
         },
         {
-            "test": "train_neuron(np.array([[1, 2], [2, 3], [3, 1]]), np.array([1, 0, 1]), np.array([0.5, -0.2]), 0, 0.1, 3)",
+            "test": "print(train_neuron(np.array([[1, 2], [2, 3], [3, 1]]), np.array([1, 0, 1]), np.array([0.5, -0.2]), 0, 0.1, 3))",
             "expected_output": "([0.4943, -0.2155], 0.0013, [0.21, 0.2093, 0.2087])"
         }
     ],
+},
+
+
+"Implementing Basic Autograd Operations (medium)": {
+    "description": "Special thanks to Andrej Karpathy for making a video about this, if you havent already check out his videos on youtube https://youtu.be/VMj-3S1tku0?si=gjlnFP4o3JRN9dTg. Write a Python class similar to the provided 'Value' class that implements the basic autograd operations: addition, multiplication, and ReLU activation. The class should handle scalar values and should correctly compute gradients for these operations through automatic differentiation.",
+    "example": """Example:
+        a = Value(2)
+        b = Value(-3)
+        c = Value(10)
+        d = a + b * c
+        e = d.relu()
+        e.backward()
+        print(a, b, c, d, e)
+        Output: Value(data=2, grad=0) Value(data=-3, grad=10) Value(data=10, grad=-3) Value(data=-28, grad=1) Value(data=0, grad=1)
+        Explanation: The output reflects the forward computation and gradients after backpropagation. The ReLU on 'd' zeros out its output and gradient due to the negative data value.""",
+    "learn": r'''
+    ## Understanding Mathematical Concepts in Autograd Operations
+First off watch this: https://youtu.be/VMj-3S1tku0?si=gjlnFP4o3JRN9dTg
+
+This task focuses on the implementation of basic automatic differentiation mechanisms for neural networks. The operations of addition, multiplication, and ReLU are fundamental to neural network computations and their training through backpropagation.
+
+### Mathematical Foundations:
+
+1. **Addition (`__add__`)**:
+   - **Forward pass**: For two scalar values $$ a $$ and $$b $$, their sum \( s \) is simply \( s = a + b \).
+   - **Backward pass**: The derivative of \( s \) with respect to both \( a \) and \( b \) is 1. Therefore, during backpropagation, the gradient of the output is passed directly to both inputs.
+
+2. **Multiplication (`__mul__`)**:
+   - **Forward pass**: For two scalar values \( a \) and \( b \), their product \( p \) is \( p = a \times b \).
+   - **Backward pass**: The gradient of \( p \) with respect to \( a \) is \( b \), and with respect to \( b \) is \( a \). This means that during backpropagation, each input's gradient is the product of the other input and the output's gradient.
+
+3. **ReLU Activation (`relu`)**:
+   - **Forward pass**: The ReLU function is defined as \( R(x) = \max(0, x) \). This function outputs \( x \) if \( x \) is positive and 0 otherwise.
+   - **Backward pass**: The derivative of the ReLU function is 1 for \( x > 0 \) and 0 for \( x \leq 0 \). Thus, the gradient is propagated through the function only if the input is positive; otherwise, it stops.
+
+### Conceptual Application in Neural Networks:
+
+- **Addition and Multiplication**: These operations are ubiquitous in neural networks, forming the basis of computing weighted sums of inputs in the neurons.
+- **ReLU Activation**: Commonly used as an activation function in neural networks due to its simplicity and effectiveness in introducing non-linearity, making learning complex patterns possible.
+
+Understanding these operations and their implications on gradient flow is crucial for designing and training effective neural network models. By implementing these from scratch, one gains deeper insights into the workings of more sophisticated deep learning libraries.
+''',
+
+    "starter_code": """class Value:
+    def __init__(self, data, _children=(), _op=''):
+        self.data = data
+        self.grad = 0
+        self._backward = lambda: None
+        self._prev = set(_children)
+        self._op = _op
+    def __repr__(self):
+        return f"Value(data={self.data}, grad={self.grad})"
+
+    def __add__(self, other):
+        # Implement addition here
+        pass
+
+    def __mul__(self, other):
+        # Implement multiplication here
+        pass
+
+    def relu(self):
+        # Implement ReLU here
+        pass
+
+    def backward(self):
+        # Implement backward pass here
+        pass""",
+    "solution": """
+class Value:
+    def __init__(self, data, _children=(), _op=''):
+        self.data = data
+        self.grad = 0
+        self._backward = lambda: None
+        self._prev = set(_children)
+        self._op = _op
+
+    def __add__(self, other):
+        other = other if isinstance(other, Value) else Value(other)
+        out = Value(self.data + other.data, (self, other), '+')
+        def _backward():
+            self.grad += out.grad
+            other.grad += out.grad
+        out._backward = _backward
+        return out
+
+    def __mul__(self, other):
+        other = other if isinstance(other, Value) else Value(other)
+        out = Value(self.data * other.data, (self, other), '*')
+        def _backward():
+            self.grad += other.data * out.grad
+            other.grad += self.data * out.grad
+        out._backward = _backward
+        return out
+
+    def relu(self):
+        out = Value(0 if self.data < 0 else self.data, (self,), 'ReLU')
+        def _backward():
+            self.grad += (out.data > 0) * out.grad
+        out._backward = _backward
+        return out
+
+    def backward(self):
+        topo = []
+        visited = set()
+        def build_topo(v):
+            if v not in visited:
+                visited.add(v)
+                for child in v._prev:
+                    build_topo(child)
+                topo.append(v)
+        build_topo(self)
+        self.grad = 1
+        for v in reversed(topo):
+            v._backward()
+    def __repr__(self):
+        return f"Value(data={self.data}, grad={self.grad})"
+""",
+    "test_cases": [
+        {
+            "test": """a = Value(2);b = Value(3);c = Value(10);d = a + b * c  ;e = Value(7) * Value(2);f = e + d;g = f.relu()  
+g.backward()
+print(a,b,c,d,e,f,g)
+""",
+            "expected_output": """ Value(data=2, grad=1) Value(data=3, grad=10) Value(data=10, grad=3) Value(data=32, grad=1) Value(data=14, grad=1) Value(data=46, grad=1) Value(data=46, grad=1)"""
+        }
+    ],
 }
-
-
-
 
 
 
