@@ -145,7 +145,43 @@ The shape of matrix \(M\) is defined by the number of rows and columns it contai
         {"test": "transpose_matrix([[1,2],[3,4],[5,6]])", "expected_output": "[[1, 3, 5], [2, 4, 6]]"},
         {"test": "transpose_matrix([[1,2,3],[4,5,6]])", "expected_output": "[[1, 4], [2, 5], [3, 6]]"}
     ]
-}, "Calculate Mean by Row or Column (easy)":{
+}, "Reshape Matrix (easy)": {
+    "description": "Write a Python function that reshapes a given matrix into a specified shape.",
+    "example": """Example:
+    input: a = [[1,2,3,4],[5,6,7,8]], new_shape = (4, 2)
+    output: [[1, 2], [3, 4], [5, 6], [7, 8]]
+    reasoning: The given matrix is reshaped from 2x4 to 4x2.""",
+    "video": "https://youtu.be/DNoLs5tTGAw?si=vpkPobZMA8YY10WY",
+    "learn": r'''
+    ## Reshaping a Matrix
+
+    Matrix reshaping involves changing the shape of a matrix without altering its data. This is essential in many machine learning tasks where the input data needs to be formatted in a specific way.
+
+    For example, consider a matrix \(M\):
+
+    Original Matrix \(M\):
+    $$
+    M = \begin{pmatrix} 1 & 2 & 3 & 4 \\ 5 & 6 & 7 & 8 \end{pmatrix}
+    $$
+
+    Reshaped Matrix \(M'\) with shape (4, 2):
+    $$
+    M' = \begin{pmatrix} 1 & 2 \\ 3 & 4 \\ 5 & 6 \\ 7 & 8 \end{pmatrix}
+    $$
+
+    Ensure the total number of elements remains constant during reshaping.
+    ''',
+    "starter_code": "import numpy as np\n\ndef reshape_matrix(a: list[list[int|float]], new_shape: tuple[int, int]) -> list[list[int|float]]:\n    #Write your code here and return a python list after reshaping by using numpy's tolist() method\n    return reshaped_matrix",
+    "solution": """def reshape_matrix(a: list[list[int|float]], new_shape: tuple[int, int]) -> list[list[int|float]]:
+    arr = np.array(a).reshape(new_shape)
+    return arr.tolist()""",
+    "test_cases": [
+        {"test": "reshape_matrix([[1,2,3,4],[5,6,7,8]], (4, 2))", "expected_output": "[[1, 2], [3, 4], [5, 6], [7, 8]]"},
+        {"test": "reshape_matrix([[1,2,3],[4,5,6]], (3, 2))", "expected_output": "[[1, 2], [3, 4], [5, 6]]"},
+        {"test": "reshape_matrix([[1,2,3,4],[5,6,7,8]], (2, 4))", "expected_output": "[[1, 2, 3, 4], [5, 6, 7, 8]]"},
+    ],
+},
+"Calculate Mean by Row or Column (easy)":{
     "description": "Write a Python function that calculates the mean of a matrix either by row or by column, based on a given mode. The function should take a matrix (list of lists) and a mode ('row' or 'column') as input and return a list of means according to the specified mode.",
     "example": """Example:
         input: matrix = [[1, 2, 3], [4, 5, 6], [7, 8, 9]], mode = 'column'
