@@ -1,15 +1,20 @@
 import streamlit as st
 
+# Set page configuration
+st.set_page_config(page_icon="assets\\favicon.ico", page_title='DeepMLeet')
+
 # Import your page modules
 import LinAlg
+import NumPy
 import MachineLearning
 import DeepLearning
-import about
+import about 
 
 # Define pages in the app
 pages = {
     "About": about,
     "Linear Algebra": LinAlg,
+    "Numpy" : NumPy,
     "Machine Learning": MachineLearning,
     "Deep Learning [In Progress]": DeepLearning
 }
