@@ -5,7 +5,6 @@ st.set_page_config(page_icon="assets\\favicon.ico", page_title='DeepMLeet')
 
 # Import your page modules
 import LinAlg
-import NumPy
 import MachineLearning
 import DeepLearning
 import about 
