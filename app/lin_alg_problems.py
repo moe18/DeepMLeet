@@ -151,7 +151,7 @@ The shape of matrix \(M\) is defined by the number of rows and columns it contai
     input: a = [[1,2,3,4],[5,6,7,8]], new_shape = (4, 2)
     output: [[1, 2], [3, 4], [5, 6], [7, 8]]
     reasoning: The given matrix is reshaped from 2x4 to 4x2.""",
-    "video": "https://youtu.be/DNoLs5tTGAw?si=vpkPobZMA8YY10WY",
+    "video": "Coming Soon",
     "learn": r'''
     ## Reshaping a Matrix
 
@@ -173,8 +173,7 @@ The shape of matrix \(M\) is defined by the number of rows and columns it contai
     ''',
     "starter_code": "import numpy as np\n\ndef reshape_matrix(a: list[list[int|float]], new_shape: tuple[int, int]) -> list[list[int|float]]:\n    #Write your code here and return a python list after reshaping by using numpy's tolist() method\n    return reshaped_matrix",
     "solution": """def reshape_matrix(a: list[list[int|float]], new_shape: tuple[int, int]) -> list[list[int|float]]:
-    arr = np.array(a).reshape(new_shape)
-    return arr.tolist()""",
+    return np.array(a).reshape(new_shape).tolist()""",
     "test_cases": [
         {"test": "reshape_matrix([[1,2,3,4],[5,6,7,8]], (4, 2))", "expected_output": "[[1, 2], [3, 4], [5, 6], [7, 8]]"},
         {"test": "reshape_matrix([[1,2,3],[4,5,6]], (3, 2))", "expected_output": "[[1, 2], [3, 4], [5, 6]]"},
