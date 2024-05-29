@@ -13,7 +13,6 @@ import about
 pages = {
     "About": about,
     "Linear Algebra": LinAlg,
-    "Numpy" : NumPy,
     "Machine Learning": MachineLearning,
     "Deep Learning [In Progress]": DeepLearning
 }
