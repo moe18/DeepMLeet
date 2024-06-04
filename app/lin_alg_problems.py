@@ -290,7 +290,51 @@ Understanding eigenvalues is essential for analyzing the effects of linear trans
             "expected_output": "[3.0, 2.0]"
         }
     ]
-}
+},
+    "Calculate 2x2 Matrix Inverse (medium)": {
+        "description": "Write a Python function that calculates the inverse of a 2x2 matrix. Return 'None' if the matrix is not invertible.",
+        "example": """Example:
+            input: matrix = [[4, 7], [2, 6]]
+            output: [[0.6, -0.7], [-0.2, 0.4]]
+            reasoning: The inverse of a 2x2 matrix [a, b], [c, d] is given by (1/(ad-bc)) * [d, -b], [-c, a], provided ad-bc is not zero.""",
+        "video": "",
+        "learn": r'''
+            ## Calculating the Inverse of a 2x2 Matrix
+
+            The inverse of a matrix A is another matrix, often denoted A^-1, such that:
+
+            $$
+            AA^-1 = A^-1A = I
+            $$
+
+            where I is the identity matrix. For a 2x2 matrix:
+            $$
+            A = \begin{pmatrix} a & b \\ c & d \end{pmatrix}
+            $$
+
+            The inverse is:
+            $$
+            A^-1 = \frac{1}{\det(A)} \begin{pmatrix} d & -b \\ -c & a \end{pmatrix}
+            $$
+
+            provided that the determinant $$\det(A) = ad - bc$$ is non-zero. If $$det(A) = 0 $$, the matrix does not have an inverse.
+
+            This process is critical in many applications including solving systems of linear equations, where the inverse is used to find solutions efficiently.
+            ''',
+        "starter_code": "def inverse_2x2(matrix: list[list[float]]) -> list[list[float]]:\n    return inverse",
+        "solution": """def inverse_2x2(matrix: list[list[float]]) -> list[list[float]]:
+    a, b, c, d = matrix[0][0], matrix[0][1], matrix[1][0], matrix[1][1]
+    determinant = a * d - b * c
+    if determinant == 0:
+        return None
+    inverse = [[d/determinant, -b/determinant], [-c/determinant, a/determinant]]
+    return inverse""",
+        "test_cases": [
+            {"test": "inverse_2x2([[4, 7], [2, 6]])", "expected_output": "[[0.6, -0.7], [-0.2, 0.4]]"},
+            {"test": "inverse_2x2([[1, 2], [2, 4]])", "expected_output": "None"},
+            {"test": "inverse_2x2([[2, 1], [6, 2]])", "expected_output": "[[-1.0, 0.5], [3.0, -1.0]]"}
+        ]
+    }
 
 ,
     "Matrix times Matrix (medium)": {
