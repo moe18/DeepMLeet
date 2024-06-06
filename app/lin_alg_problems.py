@@ -499,7 +499,61 @@ In the covariance matrix:
             "expected_output": "[[7.0, 2.5, 2.5], [2.5, 1.0, 1.0], [2.5, 1.0, 1.0]]"
         }
     ]
-}
+},
+    "Solve Linear Equations using Jacobi Method (medium)": {
+        "description": "Write a Python function that uses the Jacobi method to solve a system of linear equations given by Ax = b. The function should iterate 10 times, rounding each intermediate solution to four decimal places, and return the approximate solution x.",
+        "example": """Example:
+            input: A = [[5, -2, 3], [-3, 9, 1], [2, -1, -7]], b = [-1, 2, 3], n=2
+            output: [0.146, 0.2032, -0.5175]
+            reasoning: The Jacobi method iteratively solves each equation for x[i] using the formula x[i] = (1/a_ii) * (b[i] - sum(a_ij * x[j] for j != i)), where a_ii is the diagonal element of A and a_ij are the off-diagonal elements.""",
+        "video": "Coming soon",
+        "learn": r'''
+            ## Solving Linear Equations Using the Jacobi Method
+
+            The Jacobi method is an iterative algorithm used for solving a system of linear equations Ax = b. This method is particularly useful for large systems where direct methods like Gaussian elimination are computationally expensive.
+
+            ### Algorithm Overview
+
+            For a system of equations represented by $$Ax = b $$, where $$ A $$ is a matrix and $$ x $$ and $$ b $$ are vectors, the Jacobi method involves the following steps:
+
+            1. **Initialization**: Start with an initial guess for \( x \).
+            2. **Iteration**: For each equation \( i \), update \( x[i] \) using:
+               $$
+               x[i] = \frac{1}{a_{ii}} (b[i] - \sum_{j \neq i} a_{ij} x[j])
+               $$
+               where $$ a_{ii} $$ are the diagonal elements of $$ A $$, and $$ a_{ij} $$ are the off-diagonal elements.
+            3. **Convergence**: Repeat the iteration until the changes in $$ x $$ are below a certain tolerance or until a maximum number of iterations is reached.
+
+            This method assumes that all diagonal elements of $$ A $$ are non-zero and that the matrix is diagonally dominant or properly conditioned for convergence.
+
+            ### Practical Considerations
+
+            - The method may not converge for all matrices.
+            - Choosing a good initial guess can improve convergence.
+            - Diagonal dominance of \( A \) ensures convergence of the Jacobi method.
+            ''',
+        "starter_code": "import numpy as np\ndef solve_jacobi(A: np.ndarray, b: np.ndarray, n: int) -> list:\n    return x",
+        "solution": """import numpy as np
+
+def solve_jacobi(A: np.ndarray, b: np.ndarray, n: int) -> list:
+    d_a = np.diag(A)
+    nda = A - np.diag(d_a)
+    x = np.zeros(len(b))
+    x_hold = np.zeros(len(b))
+    for _ in range(n):
+        for i in range(len(A)):
+            x_hold[i] = (1/d_a[i]) * (b[i] - sum(nda[i]*x))
+        x = x_hold.copy()
+    return np.round(x,4).tolist()""",
+        "test_cases": [
+            {"test": "solve_jacobi(np.array([[5, -2, 3], [-3, 9, 1], [2, -1, -7]]), np.array([-1, 2, 3]),2)", "expected_output": "[0.146, 0.2032, -0.5175]"},
+            {"test": "solve_jacobi(np.array([[4, 1, 2], [1, 5, 1], [2, 1, 3]]), np.array([4, 6, 7]),5)", "expected_output": "[-0.0806, 0.9324, 2.4422]"},
+            {"test": "solve_jacobi(np.array([[4,2,-2],[1,-3,-1],[3,-1,4]]), np.array([0,7,5]),3)", "expected_output": "[1.7083, -1.9583, -0.7812]"}
+
+        ]
+    }
+
+
 ,
     
 "Singular Value Decomposition (SVD) (hard)": {
