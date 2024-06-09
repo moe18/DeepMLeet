@@ -27,7 +27,8 @@ Each topic is designed to build on the previous, ensuring a thorough understandi
         "learn": "",
         "starter_code": "",
         "solution": "",
-        "test_cases": []
+        "test_cases": [],
+        "use_micro": False
     },
     "Sigmoid Activation Function Understanding (easy)": {
     "description": "Write a Python function that computes the output of the sigmoid activation function given an input value z. The function should return the output rounded to four decimal places.",
@@ -79,6 +80,7 @@ def sigmoid(z: float) -> float:
             "expected_output": "0.2689"
         }
     ],
+    "use_micro": False
 },
 "Softmax Activation Function Implementation (easy)": {
     "description": "Write a Python function that computes the softmax activation for a given list of scores. The function should return the softmax values as a list, each rounded to four decimal places.",
@@ -133,6 +135,7 @@ def softmax(scores: list[float]) -> list[float]:
             "expected_output": "[0.0025, 0.0067, 0.9909]"
         }
     ],
+    "use_micro": False
 },
 "Single Neuron (easy)": {
     "description": "Write a Python function that simulates a single neuron with a sigmoid activation function for binary classification, handling multidimensional input features. The function should take a list of feature vectors (each vector representing multiple features for an example), associated true binary labels, and the neuron's weights (one for each feature) and bias as input. It should return the predicted probabilities after sigmoid activation and the mean squared error between the predicted probabilities and the true labels, both rounded to four decimal places.",
@@ -283,6 +286,7 @@ def train_neuron(features, labels, initial_weights, initial_bias, learning_rate,
             "expected_output": "([0.4943, -0.2155], 0.0013, [0.21, 0.2093, 0.2087])"
         }
     ],
+    "use_micro": False
 },
 
 
@@ -410,10 +414,132 @@ print(a,b,c,d,e,f,g)
             "expected_output": """ Value(data=2, grad=1) Value(data=3, grad=10) Value(data=10, grad=3) Value(data=32, grad=1) Value(data=14, grad=1) Value(data=46, grad=1) Value(data=46, grad=1)"""
         }
     ],
+    "use_micro": False
+},
+  "Implementing and Training a Simple Neural Network (medium)": {
+    "description": "Inspired by the foundational work in neural networks, your task is to build a basic multi-layer perceptron (MLP) that can be trained on a small dataset using stochastic gradient descent (SGD). The network should include forward and backward propagation capabilities for training. Implement a network with one hidden layer and ReLU activation, followed by an output layer with a linear activation for regression tasks. The network should also compute the mean squared error (MSE) loss and perform parameter updates via backpropagation.",
+    "example": """Example:
+      # Network setup
+      mlp = MLP(2, [3, 1])  # 2 input features, 3 neurons in hidden layer, 1 output
+      # Training data (simple xor function)
+      inputs = [Value(0.5), Value(0.5)]
+      target = Value(0.25)
+      # Training loop
+      for epoch in range(100):  # Train for 100 epochs
+        output = mlp(inputs)
+        loss = (output - target) ** 2  # MSE loss
+        mlp.zero_grad()  # Zero gradients before backpropagation
+        loss.backward()  # Compute gradients
+        mlp.update_parameters(0.01)  # Update parameters with learning rate of 0.01
+        print(f'Epoch {epoch}, Loss: {loss.data}')
+      Output: Display loss per epoch to monitor training progress.
+      Explanation: This setup trains the MLP on fixed data to minimize MSE loss, demonstrating basic network training dynamics.""",
+    "learn": r'''
+      ## Building and Training a Neural Network
+      This task involves constructing a neural network that includes all necessary components for supervised learning, including:
+      
+      ### Components:
+      - **Neuron**: Fundamental unit that computes weighted inputs plus a bias.
+      - **Layer**: Composes multiple neurons to transform inputs to outputs.
+      - **MLP**: Integrates layers to form a complete network.
+      - **Forward Pass**: Computes the network's output.
+      - **Loss Calculation**: Measures the network's prediction error.
+      - **Backward Pass**: Applies the chain rule to compute gradients for learning.
+      - **Parameter Update**: Adjusts the network's weights based on gradients to reduce loss.
+
+      ### Conceptual Workflow:
+      - Data is processed by the network to produce predictions.
+      - Loss is calculated from the predictions and true data.
+      - Gradients are calculated to understand how to adjust weights to improve predictions.
+      - Parameters are updated based on these gradients to minimize future loss.
+
+      By understanding each step, you gain insights into how neural networks learn from data, which is crucial for developing more complex AI systems.
+    ''',
+    "starter_code": """class MLP(Module):
+        # Define your MLP architecture here
+        # Implement forward, backward, and parameter update methods
+
+    def train_network():
+        mlp = MLP(...)
+        # Define your training loop
+
+    train_network()
+    """,
+    "solution": """
+import random
+
+class Module:
+    def zero_grad(self):
+        for p in self.parameters():
+            p.grad = 0
+
+    def parameters(self):
+        return []
+
+class Neuron(Module):
+    def __init__(self, nin, nonlin=True):
+        self.w = [Value(random.uniform(-1,1)) for _ in range(nin)]
+        self.b = Value(0)
+        self.nonlin = nonlin
+
+    def __call__(self, x):
+        act = sum((wi*xi for wi,xi in zip(self.w, x)), self.b)
+        return act.relu() if self.nonlin else act
+
+    def parameters(self):
+        return self.w + [self.b]
+
+class Layer(Module):
+    def __init__(self, nin, nout, **kwargs):
+        self.neurons = [Neuron(nin, **kwargs) for _ in range(nout)]
+
+    def __call__(self, x):
+        return [n(x) for n in self.neurons]
+
+    def parameters(self):
+        return [p for n in self.neurons for p in n.parameters()]
+
+class MLP(Module):
+    def __init__(self, nin, nouts):
+        sizes = [nin] + nouts
+        self.layers = [Layer(sizes[i], sizes[i+1], nonlin=i<len(nouts)-1) for i in range(len(sizes)-1)]
+
+    def __call__(self, x):
+        for layer in self.layers:
+            x = layer(x)[0]  # Assuming single output from final layer for simplicity
+        return x
+
+    def parameters(self):
+        return [p for layer in self.layers for p in layer.parameters()]
+
+    def update_parameters(self, lr):
+        for p in self.parameters():
+            p.data -= lr * p.grad
+
+# Example usage
+def train_network():
+    mlp = MLP(2, [3, 1])
+    inputs = [Value(0.5), Value(-0.1)]
+    target = Value(0.4)
+
+    for epoch in range(100):
+        output = mlp(inputs)
+        loss = (output - target) ** 2
+        mlp.zero_grad()
+        loss.backward()
+        mlp.update_parameters(0.01)
+        print(f'Epoch {epoch}, Loss: {loss.data}')
+
+train_network()
+    """,
+    "test_cases": [
+        {
+            "test": "",
+            "expected_output": "Display of training loss per epoch to monitor progress"
+        }
+    ],
+    'use_micro':True
 }
-
-
-
 }
 
 
