@@ -18,6 +18,9 @@ pages = {
 }
 
 # Sidebar for navigation for navigating 
+url = 'https://www.deep-ml.com/'
+st.warning("check out this [link](%s)" % url, icon="⚠️")
+
 st.sidebar.title('Navigation')
 selection = st.sidebar.radio("Sections", list(pages.keys()))
 
