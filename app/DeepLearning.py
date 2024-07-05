@@ -35,7 +35,7 @@ def run_test_cases(user_code, test_cases):
 
 def app():
     st.title("Machine Learning Challenge Platform")
-    st.write("checkout my full website at deem-ml.com")
+    st.warning('checkout my full website at deem-ml.co', icon="⚠️")
     # Let user select a problem
     problem_names = list(problems.keys())
     selected_problem = st.selectbox("Select a Problem:", problem_names)
